@@ -1,4 +1,4 @@
-package com.template;
+package com.idt;
 
 import com.google.common.collect.ImmutableList;
 import net.corda.testing.node.MockNetwork;
@@ -16,11 +16,11 @@ public class FlowTests {
 
     @Before
     public void setup() {
-        network = new MockNetwork(ImmutableList.of("com.template"));
+        network = new MockNetwork(ImmutableList.of("com.idt"));
         a = network.createNode();
         b = network.createNode();
-        a.registerInitiatedFlow(TemplateFlow.Responder.class);
-        b.registerInitiatedFlow(TemplateFlow.Responder.class);
+        a.registerInitiatedFlow(DiamondCreateFlow.Responder.class);
+        b.registerInitiatedFlow(DiamondCreateFlow.Responder.class);
         network.runNetwork();
     }
 

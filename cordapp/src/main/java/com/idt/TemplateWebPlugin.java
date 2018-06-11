@@ -1,4 +1,4 @@
-package com.template;
+package com.idt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableList;
@@ -18,19 +18,19 @@ public class TemplateWebPlugin implements WebServerPluginRegistry {
     @NotNull
     @Override
     public List<Function<CordaRPCOps, ?>> getWebApis() {
-        return ImmutableList.of(TemplateApi::new);
+        return ImmutableList.of(DiamondChainApi::new);
     }
 
     /**
      * A list of directories in the resources directory that will be served by Jetty under /web.
-     * The template's web frontend is accessible at /web/template.
+     * The idt's web frontend is accessible at /web/idt.
      */
     @NotNull
     @Override
     public Map<String, String> getStaticServeDirs() {
         return ImmutableMap.of(
-                // This will serve the templateWeb directory in resources to /web/template
-                "template", getClass().getClassLoader().getResource("templateWeb").toExternalForm());
+                // This will serve the templateWeb directory in resources to /web/idt
+                "idt", getClass().getClassLoader().getResource("templateWeb").toExternalForm());
     }
 
     @Override

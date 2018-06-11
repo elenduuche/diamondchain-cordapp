@@ -1,4 +1,4 @@
-package com.template;
+package com.idt;
 
 import com.google.common.collect.ImmutableList;
 import net.corda.core.concurrent.CordaFuture;
@@ -70,7 +70,7 @@ public class DriverBasedTest {
                     WebserverHandle webserverHandle = dsl.startWebserver(nodeHandle).get();
 
                     NetworkHostAndPort nodeAddress = webserverHandle.getListenAddress();
-                    String url = String.format("http://%s/api/template/templateGetEndpoint", nodeAddress);
+                    String url = String.format("http://%s/api/idt/templateGetEndpoint", nodeAddress);
 
                     Request request = new Request.Builder().url(url).build();
                     OkHttpClient client = new OkHttpClient();

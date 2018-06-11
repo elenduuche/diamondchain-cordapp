@@ -1,4 +1,4 @@
-package com.template;
+package com.idt;
 
 import net.corda.client.rpc.CordaRPCClient;
 import net.corda.client.rpc.CordaRPCClientConfiguration;
@@ -18,16 +18,16 @@ import java.util.concurrent.ExecutionException;
  * Demonstration of how to use the CordaRPCClient to connect to a Corda Node and
  * stream the contents of the node's vault.
  */
-public class TemplateClient {
-    private static final Logger logger = LoggerFactory.getLogger(TemplateClient.class);
+public class DiamondChainClient {
+    private static final Logger logger = LoggerFactory.getLogger(DiamondChainClient.class);
 
-    private static void logState(StateAndRef<TemplateState> state) {
+    private static void logState(StateAndRef<DiamondAssetState> state) {
         logger.info("{}", state.getState().getData());
     }
 
     public static void main(String[] args) throws ActiveMQException, InterruptedException, ExecutionException {
         if (args.length != 1) {
-            throw new IllegalArgumentException("Usage: TemplateClient <node address>");
+            throw new IllegalArgumentException("Usage: DiamondChainClient <node address>");
         }
 
         final NetworkHostAndPort nodeAddress = NetworkHostAndPort.parse(args[0]);
@@ -37,13 +37,12 @@ public class TemplateClient {
         final CordaRPCOps proxy = client.start("user1", "test").getProxy();
 
         // Grab all existing TemplateStates and all future TemplateStates.
-        final DataFeed<Vault.Page<TemplateState>, Vault.Update<TemplateState>> dataFeed = proxy.vaultTrack(TemplateState.class);
-
-        final Vault.Page<TemplateState> snapshot = dataFeed.getSnapshot();
-        final Observable<Vault.Update<TemplateState>> updates = dataFeed.getUpdates();
+        final DataFeed<Vault.Page<DiamondAssetState>, Vault.Update<DiamondAssetState>> dataFeed = proxy.vaultTrack(DiamondAssetState.class);
+        final Vault.Page<DiamondAssetState> snapshot = dataFeed.getSnapshot();
+        final Observable<Vault.Update<DiamondAssetState>> updates = dataFeed.getUpdates();
 
         // Log the existing TemplateStates and listen for new ones.
-        snapshot.getStates().forEach(TemplateClient::logState);
-        updates.toBlocking().subscribe(update -> update.getProduced().forEach(TemplateClient::logState));
+        snapshot.getStates().forEach(DiamondChainClient::logState);
+        updates.toBlocking().subscribe(update -> update.getProduced().forEach(DiamondChainClient::logState));
     }
 }
